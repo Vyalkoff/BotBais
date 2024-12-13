@@ -39,7 +39,7 @@ def handle_message(update: Update, context: CallbackContext) -> None:
 
 # Основная функция для запуска бота
 def main() -> None:
-    # Введите ваш токен, который вы получите от BotFather
+
     token = '6048932941:AAG3bb9C8sPcZUp4KnisNBcxoMRCYtDr8z0'
 
     updater = Updater(token)
