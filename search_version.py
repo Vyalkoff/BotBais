@@ -19,14 +19,13 @@ def last_version(vers: dict):
         return i
 
 
-last_version = last_version(data)
-counter = 0
-version = "3.0.50.1"
-all_version = []
-while last_version != version:
-    version = search_count_version(version)
-    all_version.append(version)
-    counter += 1
+def find_version(version):
+    last_Vers = last_version(data)
+    counter = 0
+    all_version = []
 
-print(f'С версии 3.0.50.1 До последней версии {counter}')
-print(f'Релизы {'! '.join(all_version)}')
+    while last_Vers != version:
+        version = search_count_version(version)
+        all_version.append(version)
+        counter += 1
+    return counter, all_version

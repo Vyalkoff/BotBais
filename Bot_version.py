@@ -36,26 +36,40 @@
 
 
 import asyncio
-import logging
+
+from env import BOT_TOKEN
+from search_version import find_version
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
-from config_reader import config
-from aiogram.enums.dice_emoji import DiceEmoji
-# эмодзи
+from chek_message_valid import valid
 
-logging.basicConfrig(level=logging.INFO)
-bot = Bot(token=config.bot_token.get_secret_value())
-#bot = Bot(token=)
+# logging.basicConfrig(level=logging.INFO)
+bot = Bot(token='6048932941:AAG3bb9C8sPcZUp4KnisNBcxoMRCYtDr8z0')
+# bot = Bot(token=)
 
 dp = Dispatcher()
 
 
-@dp.message(Command('/start'))
+@dp.message(Command(commands='start'))
 async def cmd_start(message: types.Message):
     await message.answer('hello')
 
 
-async def main():
-    await dp.start_polling(bot)
-    if __name__ == '__main__':
-        asyncio.run(main())
+@dp.message()
+async def send_echo(message: types.Message):
+    version = valid(message.text)
+    if version:
+        counter, all_version = find_version(message.text)
+        text = f'С версии {message.text} До последней версии {counter}\n Релизы {'! '.join(all_version)}'
+
+        await message.reply(text=text)
+    else:
+        text = f'Не правильно введена версия! Пример: 3.0.50.1'
+        await message.reply(text=text)
+
+# async def main():
+#     await dp.start_polling(bot)
+
+
+if __name__ == '__main__':
+    dp.run_polling(bot)
